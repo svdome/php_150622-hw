@@ -37,3 +37,36 @@ function register($name, $pass, $email)
     fclose($file);
     return true;
 }
+
+// Пишем функцию авторизации
+
+function login($login, $password)
+{
+    $login = trim(htmlspecialchars($login));
+    $password = trim(htmlspecialchars($password));
+
+    // Валидация данных
+
+    if ($login == '' || $password == '') {
+        echo "<h3><span style='color: red;'>Не все поля заполнены!</span></h3>";
+        return false;
+    }
+    if (strlen($login) < 3 || strlen($login) > 30 || strlen($password) < 3 || strlen($password) > 30) {
+        echo "<h3><span style='color: red;'>Введенные данные должны содержать не менее 3 и не более 30 символов!</span></h3>";
+        return false;
+    }
+
+    global $users;
+    $file = fopen($users, 'r');
+    while ($line = fgets($file, length: 128)) {
+        $data = explode(':', $line);
+        //var_dump($data);
+        if ($login == $data[0] && md5($password) == $data[1]) {
+            fclose($file);
+            return true;
+        }
+    }
+    
+    return false;
+    
+}

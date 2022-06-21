@@ -2,9 +2,11 @@
     <li role="presentation" class="active">
         <a href="index.php?page=1">Хата</a>
     </li>
-    <li role="presentation">
-        <a href="index.php?page=2">Загрузки</a>
-    </li>
+    <? if (isset($_SESSION['isAuth'])) { ?>
+        <li role="presentation">
+            <a href="index.php?page=2">Загрузки</a>
+        </li>
+    <? } ?>
     <li role="presentation">
         <a href="index.php?page=3">Галерея</a>
     </li>
